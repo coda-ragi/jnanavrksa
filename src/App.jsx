@@ -1,88 +1,69 @@
-import React, { useState } from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import FeatureList from './components/FeatureList';
-import { MusicForm } from './components/MusicForm';
-import { MusicLibrary } from './components/MusicLibrary';
-import { SearchAndFilters } from './components/SearchAndFilters';
-import { getInitialMusicItems, saveMusicItems } from './storage/musicStorage';
-import Footer from './components/Footer';
+import { useState } from 'react'
 
 function App() {
-  const [musicItems, setMusicItems] = useState(getInitialMusicItems);
-  const [filter, setFilter] = useState({
-    type: '',
-    tags: [],
-    moods: [],
-    source: ''
-  });
-  const [searchText, setSearchText] = useState('');
-
-  const handleAddItem = (newItem) => {
-    const updatedItems = [newItem, ...musicItems];
-    setMusicItems(updatedItems);
-    saveMusicItems(updatedItems);
-  };
-
-  const handleDeleteItem = (itemId) => {
-    if (window.confirm('Are you sure you want to delete this music item?')) {
-      const updatedItems = musicItems.filter((item) => item.id !== itemId);
-      setMusicItems(updatedItems);
-      saveMusicItems(updatedItems);
-    }
-  };
-
-  const handleSearch = (text) => {
-    setSearchText(text);
-  };
-
-  const handleFilter = (newFilter) => {
-    setFilter(newFilter);
-  };
-
-  const getFilteredItems = () => {
-    return musicItems.filter((item) => {
-      if (searchText) {
-        const searchLower = searchText.toLowerCase();
-        const matchesSearch = (
-          item.title.toLowerCase().includes(searchLower) ||
-          item.artist.toLowerCase().includes(searchLower) ||
-          item.notes.toLowerCase().includes(searchLower)
-        );
-        if (!matchesSearch) return false;
-      }
-
-      if (filter.type && item.type !== filter.type) return false;
-
-      if (filter.tags.length > 0 && !filter.tags.every(tag => item.tags.includes(tag))) return false;
-
-      if (filter.moods.length > 0 && !filter.moods.every(mood => item.moods.includes(mood))) return false;
-
-      if (filter.source && item.source !== filter.source) return false;
-
-      return true;
-    });
-  };
-
-  const filteredItems = getFilteredItems();
+  const [isEditing, setIsEditing] = useState(false)
+  const [link, setLink] = useState('')
 
   return (
-    <>
-      <Header /> 
-      <main>
-        <Hero />
-        <FeatureList />
-        <section className="app-workspace">
-          <div className="workspace-container">
-            <MusicForm onAddItem={handleAddItem} />
-            <SearchAndFilters items={musicItems} onSearch={handleSearch} onFilter={handleFilter} />
-            <MusicLibrary items={filteredItems} onDeleteItem={handleDeleteItem} />
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </>
+    <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
+      {!isEditing ? (
+        <button
+          onClick={() => setIsEditing(true)}
+          style={{
+            padding: '0.75rem 1rem',
+            border: 'none',
+            borderRadius: '8px',
+            backgroundColor: '#2563eb',
+            color: 'white',
+            cursor: 'pointer',
+          }}
+        >
+          Add link
+        </button>
+      ) : (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem',
+            width: '320px',
+            padding: '1rem',
+            border: '1px solid #d1d5db',
+            borderRadius: '10px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+          }}
+        >
+          <label htmlFor="link-input" style={{ fontWeight: '600' }}>
+            Enter a link
+          </label>
+          <input
+            id="link-input"
+            type="url"
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+            placeholder="https://example.com"
+            style={{
+              padding: '0.6rem',
+              border: '1px solid #cbd5e1',
+              borderRadius: '6px',
+            }}
+          />
+          <button
+            onClick={() => setIsEditing(false)}
+            style={{
+              padding: '0.6rem',
+              border: 'none',
+              borderRadius: '6px',
+              backgroundColor: '#16a34a',
+              color: 'white',
+              cursor: 'pointer',
+            }}
+          >
+            Done
+          </button>
+        </div>
+      )}
+    </div>
   )
 }
-
 export default App
