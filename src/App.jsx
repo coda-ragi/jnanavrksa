@@ -1,39 +1,27 @@
 import { useState } from 'react'
+import './App.css'
 
 function App() {
   const [isEditing, setIsEditing] = useState(false)
   const [link, setLink] = useState('')
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
+    <div className="app-shell">
+      <div className="logo-row">
+        <div className="logo">SAMA</div>
+        <div className="subtitle">My personal space</div>
+      </div>
       {!isEditing ? (
         <button
           onClick={() => setIsEditing(true)}
-          style={{
-            padding: '0.75rem 1rem',
-            border: 'none',
-            borderRadius: '8px',
-            backgroundColor: '#2563eb',
-            color: 'white',
-            cursor: 'pointer',
-          }}
+          aria-label="Add link"
+          className="add-link-button"
         >
-          Add link
+          +
         </button>
       ) : (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.5rem',
-            width: '320px',
-            padding: '1rem',
-            border: '1px solid #d1d5db',
-            borderRadius: '10px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-          }}
-        >
-          <label htmlFor="link-input" style={{ fontWeight: '600' }}>
+        <div className="link-form">
+          <label htmlFor="link-input" className="link-label">
             Enter a link
           </label>
           <input
@@ -42,23 +30,9 @@ function App() {
             value={link}
             onChange={(e) => setLink(e.target.value)}
             placeholder="https://example.com"
-            style={{
-              padding: '0.6rem',
-              border: '1px solid #cbd5e1',
-              borderRadius: '6px',
-            }}
+            className="link-input"
           />
-          <button
-            onClick={() => setIsEditing(false)}
-            style={{
-              padding: '0.6rem',
-              border: 'none',
-              borderRadius: '6px',
-              backgroundColor: '#16a34a',
-              color: 'white',
-              cursor: 'pointer',
-            }}
-          >
+          <button onClick={() => setIsEditing(false)} className="link-submit-button">
             Done
           </button>
         </div>
@@ -66,4 +40,5 @@ function App() {
     </div>
   )
 }
+
 export default App
