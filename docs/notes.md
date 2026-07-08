@@ -31,7 +31,7 @@ export default function Button() {
 
 ```
 
-### States
+## States
 A component's memory
 Components often need to change what's on the screen as a result of an interaction.
 And a regular variable isn't enough because : 
