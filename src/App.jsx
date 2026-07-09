@@ -1,10 +1,18 @@
 import { useState } from 'react'
 import './App.css'
+import nodetypes from './nodetypes.js'
 
 function App() {
   const [isEditing, setIsEditing] = useState(false)
   const [node, setNode] = useState('')
-  
+
+  function handleSubmit() {
+    if (node.trim() !== '') {
+      setIsEditing(false)
+      setNode('')
+    }
+  }
+
   return (
     <div className="app-shell">
       <div className="logo-row">
@@ -29,7 +37,7 @@ function App() {
             placeholder="Enter a node"
             className="link-input"
           />
-          <button onClick={() => setIsEditing(false)} className="link-submit-button">
+          <button onClick={handleSubmit} className="link-submit-button">
             Done
           </button>
         </div>

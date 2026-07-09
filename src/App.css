@@ -107,23 +107,3 @@ body {
   font-family: 'Courier New', monospace;
 }
 
-.type-selector {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.type-option {
-  padding: 0.4rem 0.6rem;
-  border: 1px solid #ffffff;
-  background-color: transparent;
-  color: #ffffff;
-  cursor: pointer;
-  font-family: 'Courier New', monospace;
-}
-
-.type-preview {
-  font-size: 0.9rem;
-  color: #ffffff;
-  font-family: 'Courier New', monospace;
-}
