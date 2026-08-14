@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import './App.css'
-import nodetypes from './nodetypes.js'
 
 function App() {
   const [isEditing, setIsEditing] = useState(false)
